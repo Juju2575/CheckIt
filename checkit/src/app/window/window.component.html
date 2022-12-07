@@ -1,10 +1,11 @@
+
 <div class="article-window">
     <h2> {{ title }}</h2>
     <p> {{ description }} </p>
     <img [src]=" imageUrl " [alt]="title">
     <p> Mis en ligne le {{ creationDate }} </p>
     <p>
-        <button> Oh Snap! </button>
+        <button (click)="onAddLike()"> Oh Snap! </button>
         ❤️ {{ like }} 
     </p>
 </div>
