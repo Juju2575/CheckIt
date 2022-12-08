@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Snapface } from './models/snapface.model';
 import { Fenetre } from './models/window.model';
 
 @Component({
@@ -9,6 +10,7 @@ import { Fenetre } from './models/window.model';
 export class AppComponent implements OnInit{
   title = 'checkit';
 
+  mySnap! : Snapface;
   articleWindow! : Fenetre;
   themeWindow! : Fenetre;
 
