@@ -11,10 +11,6 @@ export class AppComponent implements OnInit{
 
   mySnap! : Snapface;
 
-  getTextBoxVal(item : any){
-    console.log(item.value)
-  }
-
   ngOnInit(){
     this.mySnap = {
       title : "Lukas Lapidus",

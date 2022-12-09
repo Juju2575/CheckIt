@@ -1,11 +1,4 @@
-<div class="article-window">
-    <h2> {{ window.title }}</h2>
-    <p> {{ window.description }} </p>
-    <img [src]=" imageUrl " [alt]="window.title">
-    <p> Mis en ligne le {{ creationDate }} </p>
-    <p>
-        <button (click)="onAddLike()"> Oh Snap! </button>
-        ❤️ {{ like }}
-        <button (click)="onRandomLike()"> Celeb or not celeb ? </button>
-    </p>
-</div>
+<br>
+<input type="text" #txt placeholder="Copy your text here...">
+<button (click)="getTextBoxVal(txt)"> Get Text </button>
+<br>
