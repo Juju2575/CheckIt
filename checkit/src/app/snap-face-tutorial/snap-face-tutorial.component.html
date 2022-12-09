@@ -1,0 +1,11 @@
+<div class="snap-window">
+    <h2> {{ snapFace.title }}</h2>
+    <p> {{ snapFace.description }} </p>
+    <img [src]=" imageUrl " [alt]="snapFace.title">
+    <p> Mis en ligne le {{ creationDate }} </p>
+    <p>
+        <button (click)="onAddLike()"> Oh Snap! </button>
+        ❤️ {{ like }}
+        <button (click)="onRandomLike()"> Celeb or not celeb ? </button>
+    </p>
+</div>
