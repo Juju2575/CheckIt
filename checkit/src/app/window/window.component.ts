@@ -1,6 +1,4 @@
 import { Component} from '@angular/core';
-import { Fenetre } from '../models/window.model';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-window',
@@ -8,9 +6,5 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./window.component.css']
 })
 export class WindowComponent {
-
-  getTextBoxVal(item : any){
-    console.log(item.value)
-  }
   
 }
