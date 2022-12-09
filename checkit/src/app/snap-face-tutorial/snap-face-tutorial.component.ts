@@ -10,6 +10,8 @@ import { HttpClient } from '@angular/common/http';
 export class SnapFaceTutorialComponent implements OnInit {
   @Input() snapFace!: Snapface;
 
+  title!: string;
+  description!: string;
   creationDate!: Date;
   like!: number;
   imageUrl!: string;
