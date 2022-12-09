@@ -9,6 +9,11 @@ input {
     color: black;
 }
 
+input::placeholder {
+    opacity: .8;
+    color: coral;
+}
+
 button {
     background-color: coral;
     width: 100%;
