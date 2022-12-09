@@ -9,4 +9,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class WindowComponent {
 
+  getTextBoxVal(item : any){
+    console.log(item.value)
+  }
+  
 }
