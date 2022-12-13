@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class TextBoxComponent {
 
-  getTextBoxVal(item : any){
-    console.log(item.value)
+  captureText(text: string) {
+    console.log(text);
   }
 }
