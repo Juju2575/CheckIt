@@ -1,8 +1,4 @@
 <br>
-<input type="text" #txt placeholder="Copy your text here...">
-<button (click)="getTextBoxVal(txt)"> Get Text </button>
-<br>
-<textarea id="myTextarea" rows="10" cols="50">
-    Entrez votre texte ici...
-</textarea>
+<textarea #textarea col = 30>Entrez votre texte ici</textarea>
+<button (click)="captureText(textarea.value)">Capturez le texte</button>
 <br>  
