@@ -38,5 +38,5 @@ textarea {
 
 textarea::placeholder {
     opacity: .8;
-    color: coral;
+    color: grey;
 }
