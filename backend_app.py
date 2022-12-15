@@ -6,6 +6,7 @@ app = Flask(__name__)
 app.config["DEBUG"] = True
 CORS(app)
 url = ['']
+to_check_article = ['']
 
 
 @app.route('/receiveUrl', methods=["POST"])
@@ -27,12 +28,16 @@ def show_website():
 
 @app.route('/articleInfos', methods=["GET"])
 def show_infos():
-    return jsonify(euronews_retrieve_info('https://fr.euronews.com/2022/12/13/conference-de-soutien-a-lukraine-laide-doit-arriver-en-temps-reel-sur-le-terrain'))
-
     try:
-        return jsonify(euronews_retrieve_info('https://fr.euronews.com/2022/12/13/conference-de-soutien-a-lukraine-laide-doit-arriver-en-temps-reel-sur-le-terrain'))
+        return jsonify(euronews_retrieve_info(to_check_article[0]))
     except:
         return jsonify()
+
+
+@app.route('/sendArticle', methods=["POST"])
+def change_article():
+    to_check_article[0] = request.data
+    return jsonify(to_check_article[0])
 
 
 app.run()
