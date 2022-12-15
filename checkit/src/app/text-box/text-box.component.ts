@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-text-box',
@@ -6,8 +9,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./text-box.component.css']
 })
 export class TextBoxComponent {
-
+  constructor(private httpClient: HttpClient) { }
+  value = '';
   captureText(text: string) {
-    console.log(text);
+    this.httpClient.post('http://127.0.0.1:5000/sendArticle', text).subscribe();
+    this.httpClient.get<string>('http://127.0.0.1:5000/sendData').subscribe(x => {
+      console.log(x);
+      this.value = x;
+    });
   }
 }
