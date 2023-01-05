@@ -28,12 +28,10 @@ def show_website():
 
 @app.route('/articleInfos', methods=["GET"])
 def show_infos():
-    # try:
-    #    return jsonify(euronews_retrieve_info(to_check_article[0]))
-    # print(to_check_article[0])
-    return jsonify(euronews_retrieve_info(to_check_article[0]))
-    # except:
-    #    return jsonify()
+    try:
+        return jsonify(euronews_retrieve_info(to_check_article[0]))
+    except:
+        return jsonify()
 
 
 @app.route('/sendArticle', methods=["POST"])
