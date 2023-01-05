@@ -64,4 +64,4 @@ def euronews_retrieve_info(url):
     return rep
 
 
-print(euronews_retrieve_info(base_url))
+# print(euronews_retrieve_info(base_url))
