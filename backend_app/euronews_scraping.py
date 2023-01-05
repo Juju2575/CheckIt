@@ -18,7 +18,6 @@ def euronews_retrieve_info(url):
     article = Article(url, config=config)
     article.download()
     article.parse()
-
     # print(article.title)
     rep['Title'] = article.title
 
@@ -59,6 +58,8 @@ def euronews_retrieve_info(url):
     #print('article title : ')
     # print(article_title)
     rep['Title'] = article_title
+
+    rep['Text'] = article.text
 
     return rep
 
