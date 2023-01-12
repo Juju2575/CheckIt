@@ -19,5 +19,13 @@ export class TextBoxComponent {
       console.log(x);
       this.value = x;
     });
+    var displayBox = document.getElementById("title");
+    if (displayBox != undefined) {
+      displayBox.textContent = 'Hello';
+    }
+  }
+
+  hideTitle() {
+
   }
 }
