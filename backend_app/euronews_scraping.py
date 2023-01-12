@@ -45,9 +45,9 @@ def euronews_retrieve_info(url):
     #print('date publication : ')
     # print(date_published)
     try:
-        rep['dateCreation'] = date_published[0]
+        rep['creationDate'] = date_published[0]
     except:
-        rep['dateCreation'] = ''
+        rep['creationDate'] = ''
 
     try:
         article_author = [bbc_dictionary['@graph'][0]['author']["name"]]
