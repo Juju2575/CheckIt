@@ -18,9 +18,8 @@ def euronews_retrieve_info(url):
     article = Article(url, config=config)
     article.download()
     article.parse()
-
     # print(article.title)
-    rep['Title'] = article.title
+    rep['title'] = article.title
 
     article_meta_data = article.meta_data
 
@@ -28,7 +27,10 @@ def euronews_retrieve_info(url):
         key, value) in article_meta_data.items() if key == 'description']
     #print('article summary : ')
     # print(article_summary)
-    rep['Summary'] = article_summary
+    try:
+        rep['summary'] = article_summary[0]
+    except:
+        rep['summary'] = ''
 
     soup = BeautifulSoup(article.html, 'html.parser')
     bbc_dictionary = json.loads(
@@ -42,7 +44,10 @@ def euronews_retrieve_info(url):
             key, value) in bbc_dictionary.items() if key == 'datePublished']
     #print('date publication : ')
     # print(date_published)
-    rep['DateCreation'] = date_published
+    try:
+        rep['creationDate'] = date_published[0]
+    except:
+        rep['creationDate'] = ''
 
     try:
         article_author = [bbc_dictionary['@graph'][0]['author']["name"]]
@@ -51,16 +56,27 @@ def euronews_retrieve_info(url):
                           for (key, value) in bbc_dictionary.items() if key == 'author']
     #print('article author : ')
     # print(article_author)
-    rep['Author'] = article_author
+    try:
+        rep['author'] = article_author[0]
+    except:
+        rep['author'] = ''
 
     # another method to extract the title
     article_title = [value for (
         key, value) in bbc_dictionary.items() if key == 'headline']
     #print('article title : ')
     # print(article_title)
-    rep['Title'] = article_title
+    try:
+        rep['title'] = article_title[0]
+    except:
+        rep['title'] = ''
+
+    try:
+        rep['text'] = article.text
+    except:
+        rep['text'] = ''
 
     return rep
 
 
-print(euronews_retrieve_info(base_url))
+# print(euronews_retrieve_info(base_url))

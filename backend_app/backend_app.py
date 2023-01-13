@@ -36,8 +36,12 @@ def show_infos():
 
 @app.route('/sendArticle', methods=["POST"])
 def change_article():
-    to_check_article[0] = request.data
-    return jsonify(to_check_article[0])
+    to_check_article[0] = request.data.decode("utf-8")
+    j = jsonify(to_check_article[0])
+    j.headers.add('Access-Control-Allow-Origin', '*')
+
+    return j
+    # return jsonify()
 
 
 app.run()
