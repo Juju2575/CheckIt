@@ -18,7 +18,6 @@ def euronews_retrieve_info(url):
     article = Article(url, config=config)
     article.download()
     article.parse()
-    # print(article.title)
     rep['title'] = article.title
 
     article_meta_data = article.meta_data
@@ -60,16 +59,6 @@ def euronews_retrieve_info(url):
         rep['author'] = article_author[0]
     except:
         rep['author'] = ''
-
-    # another method to extract the title
-    article_title = [value for (
-        key, value) in bbc_dictionary.items() if key == 'headline']
-    #print('article title : ')
-    # print(article_title)
-    try:
-        rep['title'] = article_title[0]
-    except:
-        rep['title'] = ''
 
     try:
         rep['text'] = article.text

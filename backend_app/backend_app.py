@@ -29,19 +29,11 @@ def show_website():
 @app.route('/articleInfos', methods=["GET"])
 def show_infos():
     try:
+        to_check_article[0] = request.headers['Text']
         return jsonify(euronews_retrieve_info(to_check_article[0]))
-    except:
+    except Exception as e:
+        print(e)
         return jsonify()
-
-
-@app.route('/sendArticle', methods=["POST"])
-def change_article():
-    to_check_article[0] = request.data.decode("utf-8")
-    j = jsonify(to_check_article[0])
-    j.headers.add('Access-Control-Allow-Origin', '*')
-
-    return j
-    # return jsonify()
 
 
 app.run()
