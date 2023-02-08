@@ -29,9 +29,9 @@ class Euronews_Article(articles.Check_It_Article):
         #print('article summary : ')
         # print(article_summary)
         try:
-            rep['summary'] = article_summary[0]
+            self.summary = article_summary[0]
         except:
-            rep['summary'] = ''
+            self.summary = ''
 
         soup = BeautifulSoup(article.html, 'html.parser')
         bbc_dictionary = json.loads(
@@ -46,9 +46,9 @@ class Euronews_Article(articles.Check_It_Article):
         #print('date publication : ')
         # print(date_published)
         try:
-            rep['creationDate'] = date_published[0]
+            self.creationDate = date_published[0]
         except:
-            rep['creationDate'] = ''
+            self.creationDate = ''
 
         try:
             article_author = [bbc_dictionary['@graph'][0]['author']["name"]]
@@ -58,15 +58,15 @@ class Euronews_Article(articles.Check_It_Article):
         #print('article author : ')
         # print(article_author)
         try:
-            rep['author'] = article_author[0]
+            self.author = article_author[0]
         except:
-            rep['author'] = ''
+            self.author = ''
 
         try:
-            rep['text'] = article.text
+            self.text = article.text
         except:
-            rep['text'] = ''
-
+            self.text = ''
+        
         return rep
 
 
