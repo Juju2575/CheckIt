@@ -20,7 +20,7 @@ class Euronews_Article(articles.Check_It_Article):
         article = Article(self.url, config=config)
         article.download()
         article.parse()
-        rep['title'] = article.title
+        self.title = article.title
 
         article_meta_data = article.meta_data
 

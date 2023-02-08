@@ -12,7 +12,9 @@ def show_infos():
     try:
         art = Euronews_Article()
         art.url = request.headers['Text']
+        art.set_website()
         art.retrieve_info()
+        print(art.__dict__)
         return jsonify(art.__dict__)
     except Exception as e:
         print(e)
