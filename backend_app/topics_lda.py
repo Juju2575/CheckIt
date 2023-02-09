@@ -63,5 +63,5 @@ def get_topics_top_words(model, max_words):
     return topics
 
 
-res = get_topics("Trump", "president")
-print(res)
+# res = get_topics("Trump", "president")
+# print(res)
