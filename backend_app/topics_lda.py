@@ -1,13 +1,13 @@
 from gensim import models, corpora
-from gensim.test.utils import datapath
 from nltk.tokenize import RegexpTokenizer
 
 
 def get_topics(title, text):
+    print("start1")
     # loading model from disk
     model_path = "./lda_model/lda.model"
     lda = models.ldamodel.LdaModel.load(model_path)
-
+    print("start2")
     # Importing a larger list of stopwords
     with open("./lda_model/eng_stopwords_corrected.txt", "r") as f:
         eng_stopwords = f.readlines()
@@ -41,6 +41,8 @@ def get_topics(title, text):
 
     topics_top_words = get_topics_top_words(lda, 5)
 
+    print(topics_top_words[sorted_topics[0][0]])
+
     return topics_top_words[
         sorted_topics[0][0]
     ]  # the best topic is at index 0, and it's index is the first element of the tuple
@@ -61,5 +63,5 @@ def get_topics_top_words(model, max_words):
     return topics
 
 
-# res = get_topics("Trump", "president")
-# print(res)
+res = get_topics("Trump", "president")
+print(res)

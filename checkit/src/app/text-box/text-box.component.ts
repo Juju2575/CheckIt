@@ -13,11 +13,18 @@ import { ArrayType } from '@angular/compiler';
 export class TextBoxComponent {
   constructor(private httpClient: HttpClient) { }
   value = new Article;
-  retrieveInfo(text: string) {
+  async plotInfo(text: string) {
+    await this.retrieveInfo(text);
+    await this.displayInfo();
+  }
+  async retrieveInfo(text: string) {
     this.httpClient.get<Article>('http://127.0.0.1:5000/articleInfos', { headers: { text } }).subscribe(x => {
       console.log(x);
       this.value = x;
     });
+  }
+  async displayInfo() {
+    console.log('Hello');
     var displayBox = document.getElementById("title");
     if (displayBox != undefined && this.value.title != '') {
       displayBox.textContent = 'Title : '.concat(this.value.title);
