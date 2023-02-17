@@ -36,6 +36,10 @@ export class TextBoxComponent {
       if (displayBox != undefined && this.value.creationDate != '') {
         displayBox.textContent = 'Article creation date : '.concat(this.value.creationDate);
       }
+      displayBox = document.getElementById("topics");
+      if (displayBox != undefined && this.value.topics != '') {
+        displayBox.textContent = ''.concat(this.value.topics);
+      }
     });
 
 
