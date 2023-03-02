@@ -16,6 +16,7 @@ def show_infos():
         art.set_website()
         art.retrieve_info()
         art.topic_analysis()
+        # art.topics = ['topic 1', 'topic 2']
         print(art.__dict__)
         return jsonify(art.__dict__)
     except Exception as e:

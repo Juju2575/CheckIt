@@ -36,9 +36,18 @@ export class TextBoxComponent {
       if (displayBox != undefined && this.value.creationDate != '') {
         displayBox.textContent = 'Article creation date : '.concat(this.value.creationDate);
       }
-      displayBox = document.getElementById("topics");
-      if (displayBox != undefined && this.value.topics != '') {
-        displayBox.textContent = ''.concat(this.value.topics);
+      var ul = document.getElementById("topicsList");
+      var li;
+      var topics = this.value.topics.substring(1, this.value.topics.length - 1).split(",");
+      // console.log(topics);
+      // console.log(typeof topics);
+      // console.log(typeof this.value.topics);
+      if (ul != undefined) {
+        for (let i = 0; i < topics.length; i++) {
+          li = document.createElement("li");
+          li.appendChild(document.createTextNode(topics[i]));
+          ul.appendChild(li);
+        }
       }
     });
 
