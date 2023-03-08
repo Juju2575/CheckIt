@@ -1,8 +1,12 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from euronews_scraping import Euronews_Article
+from euronews_scraping import *
 import sys
 
+corres_dict = {'euronews': Euronews_Article,
+               'monde-diplomatique': Monde_Article,
+               'lemonde': Monde_Article,
+               '': Euronews_Article}
 app = Flask(__name__)
 app.config["DEBUG"] = True
 CORS(app)
@@ -11,7 +15,9 @@ CORS(app)
 @app.route("/articleInfos", methods=["GET"])
 def show_infos():
     try:
-        art = Euronews_Article()
+        for k in corres_dict.keys():
+            if k in request.headers["Text"]:
+                art = corres_dict[k]()
         art.url = request.headers["Text"]
         art.set_website()
         art.retrieve_info()
