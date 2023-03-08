@@ -13,11 +13,7 @@ export class Article {
         this.summary = '';
         this.text = '';
         this.title = '';
-<<<<<<< HEAD
         this.topics = '[]';
-=======
-        this.topics = '';
->>>>>>> 75013157828da85e633a251f15e7ce1a2b237066
     }
 
 }
