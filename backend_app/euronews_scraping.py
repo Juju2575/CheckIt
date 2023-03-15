@@ -93,7 +93,6 @@ class Monde_Article(articles.Check_It_Article):
         bbc_dictionary = json.loads(
             "".join(soup.find("script", {"type": "application/ld+json"}).contents))
 
-        # print(bbc_dictionary['@graph'])
         try:
             date_published = [bbc_dictionary['@graph'][0]['datePublished']]
         except:
