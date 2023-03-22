@@ -1,47 +1,30 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from euronews_scraping import euronews_retrieve_info
+from euronews_scraping import Euronews_Article
+import sys
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
 CORS(app)
-url = ['']
-to_check_article = ['']
 
 
-@app.route('/receiveUrl', methods=["POST"])
-def addOne():
-    url_sent = request.json['name']
-    url[0] = url_sent
-    return jsonify(url[0])
-
-
-@app.route('/sendData', methods=["GET"])
-def show_website():
-    if url[0] != '':
-        if '.fr' in url[0]:
-            return jsonify(url[0].split('.fr')[0])
-        return jsonify(url[0])
-    else:
-        return jsonify(url[0])
-
-
-@app.route('/articleInfos', methods=["GET"])
+@app.route("/articleInfos", methods=["GET"])
 def show_infos():
     try:
-        return jsonify(euronews_retrieve_info(to_check_article[0]))
-    except:
+        art = Euronews_Article()
+        art.url = request.headers["Text"]
+        art.set_website()
+        art.retrieve_info()
+        art.topic_analysis()
+        # art.title = 'Hello'
+        # art.topics = "[topic 1, topic 2]"
+
+        print(art.__dict__)
+        return jsonify(art.__dict__)
+    except Exception as e:
+        print(e)
+        print(sys.exc_info())
         return jsonify()
-
-
-@app.route('/sendArticle', methods=["POST"])
-def change_article():
-    to_check_article[0] = request.data.decode("utf-8")
-    j = jsonify(to_check_article[0])
-    j.headers.add('Access-Control-Allow-Origin', '*')
-
-    return j
-    # return jsonify()
 
 
 app.run()

@@ -5,6 +5,7 @@ export class Article {
     summary: string;
     text: string;
     title: string;
+    topics: string;
     constructor() {
         this.id = '';
         this.author = '';
@@ -12,6 +13,7 @@ export class Article {
         this.summary = '';
         this.text = '';
         this.title = '';
+        this.topics = '[]';
     }
 
 }
