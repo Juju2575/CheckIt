@@ -1,12 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Article } from '../app.article';
+
 
 @Component({
   selector: 'app-similar-list',
   templateUrl: './similar-list.component.html',
   styleUrls: ['./similar-list.component.css']
 })
-export class SimilarListComponent {
+export class SimilarListComponent implements OnInit {
+
+  product: JSON;
+
+  constructor() {
+    this.product = JSON;
+  }
+
+  ngOnInit() {
+    this.product = history.state.article;
+    console.log('ok');
+    console.log(history.state)
+    console.log(this.product);
+    console.log('ok');
+  }
 
   displayInfo(value: Article) {
     var displayBox = document.getElementById("title_similist");

@@ -9,6 +9,7 @@ import { SnapFaceTutorialComponent } from './snap-face-tutorial/snap-face-tutori
 import { TextBoxComponent } from './text-box/text-box.component';
 import { SimilarListComponent } from './similar-list/similar-list.component';
 import { HomePageComponent } from './home-page/home-page.component';
+import { Article } from './app.article';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { HomePageComponent } from './home-page/home-page.component';
     RouterModule.forRoot(
       [
         { path: '', component: HomePageComponent },
-        { path: 'similar-articles', component: SimilarListComponent },
+        { path: 'similar-articles', component: SimilarListComponent, data: { article: null } },
       ],
     ),
   ],
