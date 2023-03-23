@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Article } from '../app.article';
 
 
@@ -7,20 +8,13 @@ import { Article } from '../app.article';
   templateUrl: './similar-list.component.html',
   styleUrls: ['./similar-list.component.css']
 })
-export class SimilarListComponent implements OnInit {
+export class SimilarListComponent {
 
   product: JSON;
 
-  constructor() {
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.product = JSON;
-  }
-
-  ngOnInit() {
-    this.product = history.state.article;
-    console.log('ok');
-    console.log(history.state)
-    console.log(this.product);
-    console.log('ok');
+    console.log(route.snapshot.data)
   }
 
   displayInfo(value: Article) {

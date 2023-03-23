@@ -1,4 +1,5 @@
 from topics_lda import get_topics
+from GoogleNews import GoogleNews
 
 
 class Check_It_Article:
@@ -6,11 +7,22 @@ class Check_It_Article:
         self.title = ''
         self.url = ''
         self.text = ''
+        self.google_articles = []
+        self.similar_articles = []
 
     def set_title(self, title):
         self.title = title
 
     def retrieve_info(self):
+        return
+
+    def google_news(self):
+        ggnews = GoogleNews()
+        if self.title != '':
+            ggnews.get_news(self.title)
+            self.google_articles = ggnews.results()
+
+    def set_similar_articles(self):
         return
 
     def topic_analysis(self):
