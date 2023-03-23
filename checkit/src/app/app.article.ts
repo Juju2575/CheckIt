@@ -13,7 +13,7 @@ export class Article {
         this.summary = '';
         this.text = '';
         this.title = '';
-        this.topics = '';
+        this.topics = '[]';
     }
 
 }
