@@ -1,6 +1,6 @@
 from bertopic import BERTopic
 
-model = BERTopic.load("../../my_BERTopic")
+model = BERTopic.load("bertopic_model/my_BERTopic")
 
 def get_topic_keywords(title, text):
     
