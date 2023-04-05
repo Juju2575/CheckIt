@@ -1,5 +1,5 @@
-from topics_lda import get_topics
-from GoogleNews import GoogleNews
+import topics_lda
+import topics_bertopic
 
 
 class Check_It_Article:
@@ -26,4 +26,5 @@ class Check_It_Article:
         return
 
     def topic_analysis(self):
-        self.topics = get_topics(self.title, self.text)
+        self.topics = topics_bertopic.get_topic_keywords(self.title, self.text)
+        # self.topics = topics_lda.get_topics(self.title, self.text)
