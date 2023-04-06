@@ -3,6 +3,7 @@ from flask_cors import CORS
 from euronews_scraping import Euronews_Article
 import sys
 
+
 app = Flask(__name__)
 app.config["DEBUG"] = True
 CORS(app)
