@@ -1,5 +1,6 @@
 import topics_lda
 import topics_bertopic
+from GoogleNews import GoogleNews
 
 
 class Check_It_Article:
@@ -25,6 +26,17 @@ class Check_It_Article:
     def set_similar_articles(self):
         return
 
+    def standardize_topics(self):
+
+        if type(self.topics) == list:
+            rep = "["
+            for topic in self.topics:
+                rep += topic + ","
+            rep = rep[:len(rep)-1]
+            rep += "]"
+            self.topics = rep
+
     def topic_analysis(self):
         self.topics = topics_bertopic.get_topic_keywords(self.title, self.text)
         # self.topics = topics_lda.get_topics(self.title, self.text)
+        self.standardize_topics()

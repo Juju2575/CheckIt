@@ -27,8 +27,10 @@ export class WindowComponent {
     if (displayBox != undefined && value.creationDate != '') {
       displayBox.textContent = 'Article creation date : '.concat(value.creationDate);
     }
+    console.log("check 1");
     var ul = document.getElementById("topicsList");
     var li;
+    console.log("check 2");
     var topics = value.topics.substring(1, value.topics.length - 1).split(",");
     if (ul != undefined) {
       while (ul.firstChild) {
