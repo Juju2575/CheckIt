@@ -1,17 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Article } from '../app.article';
 
-@Component({
-  selector: 'app-window',
-  templateUrl: './window.component.html',
-  styleUrls: ['./window.component.css']
-})
-export class WindowComponent {
 
-  constructor() { }
-  isLoaded = false;
+@Component({
+  selector: 'app-similar-list',
+  templateUrl: './similar-list.component.html',
+  styleUrls: ['./similar-list.component.css']
+})
+export class SimilarListComponent {
+
+  product: JSON;
+
+  constructor(private route: ActivatedRoute, private router: Router) {
+    this.product = JSON;
+    console.log(route.snapshot.data)
+  }
+
   displayInfo(value: Article) {
-    var displayBox = document.getElementById("title");
+    var displayBox = document.getElementById("title_similist");
     if (displayBox != undefined && value.title != '') {
       displayBox.textContent = 'Title : '.concat(value.title);
     }
@@ -27,10 +34,8 @@ export class WindowComponent {
     if (displayBox != undefined && value.creationDate != '') {
       displayBox.textContent = 'Article creation date : '.concat(value.creationDate);
     }
-    console.log("check 1");
     var ul = document.getElementById("topicsList");
     var li;
-    console.log("check 2");
     var topics = value.topics.substring(1, value.topics.length - 1).split(",");
     if (ul != undefined) {
       while (ul.firstChild) {
