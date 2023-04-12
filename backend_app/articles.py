@@ -45,6 +45,7 @@ class Check_It_Article:
     def to_paragraph_list(self):
         rep = paragraph_analysis.text_with_paragraphs(
             self.text)
+        print(rep)
         for i in range(len(rep)):
             rep[i] = (rep[i], paragraph_analysis.retrieve_dates(
                 rep[i]), paragraph_analysis.semantical_analysis(rep[i]))

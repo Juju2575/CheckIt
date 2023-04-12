@@ -1,11 +1,5 @@
 from euronews_scraping import *
-from twitter_scraping import Tweet
 import sys
-
-corres_dict = {'euronews': Euronews_Article,
-               'monde-diplomatique': Monde_Article,
-               'lemonde': Monde_Article,
-               'twitter': Tweet}
 
 
 def show_infos(url):

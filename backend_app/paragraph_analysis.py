@@ -7,13 +7,20 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from scipy.signal import argrelextrema
 import math
-from transformers import AutoTokenizer, AutoModelForTokenClassification
-from transformers import pipeline
+from NERDA.precooked import EN_BERT_ML, EN_ELECTRA_EN
+import nltk
+from unidecode import unidecode
 
 
-TOKENIZER = AutoTokenizer.from_pretrained("dslim/bert-base-NER")
-MODEL_NER_HUG = AutoModelForTokenClassification.from_pretrained(
-    "dslim/bert-base-NER")
+nltk.download("punkt")
+
+#model_nerda = EN_BERT_ML()
+model_nerda = EN_ELECTRA_EN()
+
+# model_nerda.download_network(dir="./ner_models/")
+
+# model_nerda.load_network(file_path="./ner_models/EN_BERT_ML.bin")
+model_nerda.load_network(file_path="./ner_models/EN_ELECTRA_EN.bin")
 MODEL = SentenceTransformer('all-mpnet-base-v2')
 text = "Former Italian Premier Silvio Berlusconi has been hospitalised in intensive care due to a problem related to a previous infection, but was alert and speaking, according to Italy’s foreign minister. The 86-year-old three-time premier was in the ICU at Milan’s San Raffaele hospital, the clinic where he routinely receives care, said Foreign Minister Antonio Tajani, who is also the leader of Berlusconi’s Forza Italia party. Speaking from Brussels, Tajani said Berlusconi was admitted because of an “unresolved problem” related to a previous infection. Berlusconi has had a series of health problems in recent years. In 2020, he contracted COVID-19. He told reporters after being discharged from a 10-day hospital stay then that the disease had been “insidious” and was the most dangerous challenge he had ever faced. He has had a pacemaker for years, underwent heart surgery to replace an aortic valve in 2016 and has overcome prostate cancer. In January 2022 he was admitted for a reported urinary tract infection. Berlusconi, a media mogul-turned-politician, made a shock return to politics in September’s general elections, winning a Senate seat a decade after being banned from holding public office over a tax fraud conviction.  The 2022 election brought a hard-right-led government to power, with Berlusconi’s Forza Italia party a junior member of a government headed by Prime Minister Giorgia Meloni. In January 2022, Berlusconi withdrew his name from consideration to be Italy’s president."
 
@@ -56,8 +63,7 @@ def rev_sigmoid(x: float) -> float:
 
 
 def text_with_paragraphs(art):
-    text = art
-    text.strip()
+    text = art.replace('\n', '')
     sentences = text.split('. ')
     embeddings = MODEL.encode(sentences)
 
@@ -124,5 +130,59 @@ def text_with_paragraphs(art):
 
 
 def semantical_analysis(paragraph):
-    nlp = pipeline("ner", model=MODEL_NER_HUG, tokenizer=TOKENIZER)
-    return nlp(paragraph)
+    par_list = paragraph.split('.')
+    sentence_list = []
+    entity_tags = []
+    for i in range(len(par_list)):
+        par_list[i] = par_list[i] + '.'
+        ner_results = model_nerda.predict_text(par_list[i])
+        sentence_list = sentence_list + ner_results[0]
+        entity_tags = entity_tags + ner_results[1]
+    print((sentence_list, entity_tags))
+    return get_entity_list((sentence_list, entity_tags))
+
+
+def get_entity_list(ner_results):
+    entity_list = []
+    for i in range(len(ner_results[0])):
+        sentence = ner_results[0][i]
+        entity_tags = ner_results[1][i]
+        j = 0
+        n = len(sentence)
+        while j < n:
+            print(sentence[j])
+            if entity_tags[j][0] == 'B':
+                entity_tag = entity_tags[j][2:]
+                entity = sentence[j]
+                while j+1 < n and entity_tags[j+1][0] == 'I':
+                    j += 1
+                    entity += " " + sentence[j]
+                entity_list.append((entity, entity_tag))
+            elif entity_tags[j][0] == 'O':
+                pass
+            else:
+                print("Error with the tag :", entity_tags[j])
+            j += 1
+    return entity_list
+
+
+def compare(analyzed_par1, analyzed_par2):
+    (text_1, dates_1, elements_1) = analyzed_par1
+    (text_2, dates_2, elements_2) = analyzed_par2
+    total_count = 0
+    splitted_elements_1 = []
+    splitted_elements_2 = []
+    for elt in elements_1:
+        l = elt[0].split(' ')
+        for e in l:
+            splitted_elements_1.append((unidecode(e).lower(), elt[1]))
+    for elt in elements_2:
+        l = elt[0].split(' ')
+        for e in l:
+            splitted_elements_2.append((unidecode(e).lower(), elt[1]))
+    splitted_elements_1 = set(splitted_elements_1)
+    splitted_elements_2 = set(splitted_elements_2)
+    inter = splitted_elements_1.intersection(splitted_elements_2)
+    total_count = len(inter)
+    print(total_count, len(splitted_elements_1), len(splitted_elements_2))
+    return total_count
