@@ -1,10 +1,11 @@
 import re
 import nltk
+import pandas as pd
 
-nltk.download('punkt')
-nltk.download('averaged_perceptron_tagger')
-nltk.download("stopwords")
-nltk.download("wordnet")
+# nltk.download('punkt')
+# nltk.download('averaged_perceptron_tagger')
+# nltk.download("stopwords")
+# nltk.download("wordnet")
 
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
@@ -13,6 +14,15 @@ from nltk.stem.wordnet import WordNetLemmatizer
 from sklearn.feature_extraction.text import TfidfTransformer 
 from sklearn.feature_extraction.text import CountVectorizer
 
+def populate_corpus(file_path):
+    corpus = []
+
+    with open(file_path, "r") as f:
+        for line in f:
+            corpus.append(line.strip())
+
+    return corpus
+        
 def clean_article(article):
 
     stop_words = set(stopwords.words("english"))
@@ -57,7 +67,7 @@ def clean_article(article):
 def create_tfidf(corpus):
 
     stop_words = set(stopwords.words("english"))
-    
+
     cv=CountVectorizer(max_df=0.8,stop_words=stop_words, max_features=10000, ngram_range=(1,3))
     
     X=cv.fit_transform(corpus)
@@ -97,7 +107,9 @@ def get_keywords(title, text):
 
     article_content = title + ". " + text #string
 
-    corpus = [] #A remplacer!!! Comment sauvegarder du tfidf?
+    file_path ='C:/Users/julie/Documents/CheckIt/Code/Dataset/cleaned_corpus.txt'
+
+    corpus = populate_corpus(file_path)
 
     #Text preprocessing
     clean_article_content = clean_article(article_content)
@@ -116,3 +128,16 @@ def get_keywords(title, text):
     keywords=extract_topn_from_vector(feature_names,sorted_items,5)
     
     return keywords
+
+text = "Actor Kevin Spacey is to be charged with seven further sex offences in the UK, in addition to those he is already due to stand trial for in June next year.All the charges relate to one man. Britain's Crown Prosecution said that charges against the former House of Cards star are three of indecent assault, three of sexual assault and one of causing a person to engage in sexual activity without consent. The charges relate to incidents between 2001 and 2004. "
+title = " "
+
+mot_clef = get_keywords(text, title)
+
+print("\nAbstract:")
+print(text)
+print("\nKeywords:")
+for k in mot_clef:
+    print(k,mot_clef[k])
+
+
