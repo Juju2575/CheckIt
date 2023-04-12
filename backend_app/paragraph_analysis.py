@@ -7,18 +7,19 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from scipy.signal import argrelextrema
 import math
+from transformers import AutoTokenizer, AutoModelForTokenClassification
+from transformers import pipeline
 
-model = SentenceTransformer('all-mpnet-base-v2')
+
+TOKENIZER = AutoTokenizer.from_pretrained("dslim/bert-base-NER")
+MODEL_NER_HUG = AutoModelForTokenClassification.from_pretrained(
+    "dslim/bert-base-NER")
+MODEL = SentenceTransformer('all-mpnet-base-v2')
 text = "Former Italian Premier Silvio Berlusconi has been hospitalised in intensive care due to a problem related to a previous infection, but was alert and speaking, according to Italy’s foreign minister. The 86-year-old three-time premier was in the ICU at Milan’s San Raffaele hospital, the clinic where he routinely receives care, said Foreign Minister Antonio Tajani, who is also the leader of Berlusconi’s Forza Italia party. Speaking from Brussels, Tajani said Berlusconi was admitted because of an “unresolved problem” related to a previous infection. Berlusconi has had a series of health problems in recent years. In 2020, he contracted COVID-19. He told reporters after being discharged from a 10-day hospital stay then that the disease had been “insidious” and was the most dangerous challenge he had ever faced. He has had a pacemaker for years, underwent heart surgery to replace an aortic valve in 2016 and has overcome prostate cancer. In January 2022 he was admitted for a reported urinary tract infection. Berlusconi, a media mogul-turned-politician, made a shock return to politics in September’s general elections, winning a Senate seat a decade after being banned from holding public office over a tax fraud conviction.  The 2022 election brought a hard-right-led government to power, with Berlusconi’s Forza Italia party a junior member of a government headed by Prime Minister Giorgia Meloni. In January 2022, Berlusconi withdrew his name from consideration to be Italy’s president."
 
 
 def retrieve_dates(art):
-    matches = list(datefinder.find_dates(art))
-
-    if len(matches) > 0:
-        print(matches)
-    else:
-        print('no date found')
+    return list(datefinder.find_dates(art))
 
 
 def activate_similarities(similarities: np.array, p_size=10) -> np.array:
@@ -58,7 +59,7 @@ def text_with_paragraphs(art):
     text = art
     text.strip()
     sentences = text.split('. ')
-    embeddings = model.encode(sentences)
+    embeddings = MODEL.encode(sentences)
 
     # Create similarities matrix
     similarities = cosine_similarity(embeddings)
@@ -107,13 +108,21 @@ def text_with_paragraphs(art):
     # Get the order number of the sentences which are in splitting points
     split_points = [each for each in minmimas[0]]
     # Create empty string
-    text = ''
+    rep = []
     for num, each in enumerate(sentences):
-        # Check if sentence is a minima (splitting point)
-        if num in split_points:
-            # If it is than add a dot to the end of the sentence and a paragraph before it.
-            text += f'\n\n {each}. '
+        if num == 0:
+            rep.append(each)
         else:
-            # If it is a normal sentence just add a dot to the end and keep adding sentences.
-            text += f'{each}. '
-    print(text)
+            # Check if sentence is a minima (splitting point)
+            if num in split_points:
+                # If it is than add a dot to the end of the sentence and a paragraph before it.
+                rep.append(each)
+            else:
+                # If it is a normal sentence just add a dot to the end and keep adding sentences.
+                rep[-1] = rep[-1] + ' ' + each
+    return rep
+
+
+def semantical_analysis(paragraph):
+    nlp = pipeline("ner", model=MODEL_NER_HUG, tokenizer=TOKENIZER)
+    return nlp(paragraph)
