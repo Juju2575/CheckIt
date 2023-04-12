@@ -175,11 +175,11 @@ def compare(analyzed_par1, analyzed_par2):
     for elt in elements_1:
         l = elt[0].split(' ')
         for e in l:
-            splitted_elements_1.append((unidecode(e).lower(), elt[1]))
+            splitted_elements_1.append(((unidecode(e)).lower(), elt[1]))
     for elt in elements_2:
         l = elt[0].split(' ')
         for e in l:
-            splitted_elements_2.append((unidecode(e).lower(), elt[1]))
+            splitted_elements_2.append(((unidecode(e)).lower(), elt[1]))
     splitted_elements_1 = set(splitted_elements_1)
     splitted_elements_2 = set(splitted_elements_2)
     inter = splitted_elements_1.intersection(splitted_elements_2)
