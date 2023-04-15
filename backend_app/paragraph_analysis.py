@@ -63,7 +63,7 @@ def rev_sigmoid(x: float) -> float:
 
 
 def text_with_paragraphs(art):
-    text = art.replace('\n', '')
+    text = art.replace('\n', ' ')
     sentences = text.split('. ')
     embeddings = MODEL.encode(sentences)
 
