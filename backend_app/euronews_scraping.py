@@ -12,16 +12,15 @@ config.request_timeout = 10
 
 base_url = 'https://fr.euronews.com/2022/12/13/conference-de-soutien-a-lukraine-laide-doit-arriver-en-temps-reel-sur-le-terrain'
 
+
 class Euronews_Article(articles.Check_It_Article):
 
     def retrieve_info(self):
         rep = {}
-        
         article = Article(self.url, config=config)
         article.download()
         article.parse()
         self.title = article.title
-
         article_meta_data = article.meta_data
 
         article_summary = [value for (
@@ -49,12 +48,11 @@ class Euronews_Article(articles.Check_It_Article):
             self.creationDate = date_published[0]
         except:
             self.creationDate = ''
-
         try:
             article_author = [bbc_dictionary['@graph'][0]['author']["name"]]
         except:
             article_author = [value['name']
-                            for (key, value) in bbc_dictionary.items() if key == 'author']
+                              for (key, value) in bbc_dictionary.items() if key == 'author']
         #print('article author : ')
         # print(article_author)
         try:
@@ -66,8 +64,64 @@ class Euronews_Article(articles.Check_It_Article):
             self.text = article.text
         except:
             self.text = ''
-        
+
         return rep
 
-
     # print(euronews_retrieve_info(base_url))
+
+
+class Monde_Article(articles.Check_It_Article):
+
+    def retrieve_info(self):
+        rep = {}
+        article = Article(self.url, config=config)
+        article.download()
+        article.parse()
+        self.title = article.title
+        article_meta_data = article.meta_data
+
+        article_summary = [value for (
+            key, value) in article_meta_data.items() if key == 'description']
+        #print('article summary : ')
+        # print(article_summary)
+        try:
+            self.summary = article_summary[0]
+        except:
+            self.summary = ''
+
+        soup = BeautifulSoup(article.html, 'html.parser')
+        bbc_dictionary = json.loads(
+            "".join(soup.find("script", {"type": "application/ld+json"}).contents))
+
+        try:
+            date_published = [bbc_dictionary['@graph'][0]['datePublished']]
+        except:
+            date_published = [value for (
+                key, value) in bbc_dictionary.items() if key == 'datePublished']
+        #print('date publication : ')
+        # print(date_published)
+        try:
+            self.creationDate = date_published[0]
+        except:
+            self.creationDate = ''
+        try:
+            article_author = [
+                bbc_dictionary['@graph'][0]['author']["name"]]
+        except:
+            print([value for (key, value)
+                   in bbc_dictionary.items() if key == 'author'])
+            article_author = [value[0]['name'] for (
+                key, value) in bbc_dictionary.items() if key == 'author']
+        #print('article author : ')
+        # print(article_author)
+        try:
+            self.author = article_author[0]
+        except:
+            self.author = ''
+
+        try:
+            self.text = article.text
+        except:
+            self.text = ''
+
+        return rep
