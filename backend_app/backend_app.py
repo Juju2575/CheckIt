@@ -26,7 +26,7 @@ def show_infos():
         art.url = request.headers["Text"]
         art.retrieve_info()
         art.topic_analysis()
-
+        # new changes
         print(art.__dict__)
         return jsonify(art.__dict__)
     except Exception as e:
