@@ -38,5 +38,6 @@ class Check_It_Article:
 
     def topic_analysis(self):
         self.topics = topics_bertopic.get_topic_keywords(self.title, self.text)
+        # self.topics = '[International Politics]'
         # self.topics = topics_lda.get_topics(self.title, self.text)
         self.standardize_topics()
